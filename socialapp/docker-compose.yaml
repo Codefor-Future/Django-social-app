@@ -6,10 +6,10 @@ services:
       context: .
     environment:
       - SECRET_KEY=django
-      - DB_HOST=djangoapp.c6rtlrz5vtu8.ap-south-1.rds.amazonaws.com
+      - DB_HOST=""
       - DB_NAME=postgres
-      - DB_USER=dbuser
-      - DB_PASSWORD=12345678
+      - DB_USER=""
+      - DB_PASSWORD=""
       - DB_PORT=5432
       - CORS_ORIGIN_ALLOW_ALL=True
     # depends_on:
