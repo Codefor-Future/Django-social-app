@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: .
+    environment:
+      - SECRET_KEY=django
+      - DB_HOST=djangoapp.c6rtlrz5vtu8.ap-south-1.rds.amazonaws.com
+      - DB_NAME=postgres
+      - DB_USER=dbuser
+      - DB_PASSWORD=12345678
+      - DB_PORT=5432
+      - CORS_ORIGIN_ALLOW_ALL=True
+    # depends_on:
+    #   - db
+    ports:
+      - "8000:8000"
+    # command: python manage.py runserver 0.0.0.0:8000
+  # db:
+  #   image: postgres:13-alpine
+  #   environment:
+  #     - POSTGRES_DB=myproject
+  #     - POSTGRES_USER=myprojectuser
+  #     - POSTGRES_PASSWORD=password
+  #   ports:
+  #     - "5432:5432"

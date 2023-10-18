@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  labels:
+    name: app
+    tier: frontend
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      name: application
+  template:
+    metadata:
+      name: app
+      labels: 
+        name: application
+    spec:
+      containers:
+        - name: application
+          image: abhinavparakkal/django-app
+          env:
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: SECRET_KEY
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: app-configmap
+                  key: DB_HOST
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: app-configmap
+                  key: DB_NAME
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: app-configmap
+                  key: DB_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: DB_PASSWORD
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: app-configmap
+                  key: DB_PORT
+            - name: CORS_ORIGIN_ALLOW_ALL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-configmap
+                  key: CORS_ORIGIN_ALLOW_ALL
+          ports:
+            - containerPort: 8000
+
