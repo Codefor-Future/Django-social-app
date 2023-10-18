@@ -5,10 +5,10 @@ metadata:
   labels: 
     name: app-service
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector: 
     name: application
   ports: 
     - port: 80
       targetPort: 8000
-      nodePort: 30457       
+      # nodePort: 30457       
