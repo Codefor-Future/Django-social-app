@@ -5,23 +5,23 @@ services:
     build:
       context: .
     environment:
-      - SECRET_KEY=django
-      - DB_HOST=""
+      - SECRET_KEY="secret_key"
+      - DB_HOST=db
       - DB_NAME=postgres
-      - DB_USER=""
-      - DB_PASSWORD=""
+      - DB_USER=dbuser
+      - DB_PASSWORD="password"
       - DB_PORT=5432
       - CORS_ORIGIN_ALLOW_ALL=True
-    # depends_on:
-    #   - db
+    depends_on:
+      - db
     ports:
       - "8000:8000"
     # command: python manage.py runserver 0.0.0.0:8000
-  # db:
-  #   image: postgres:13-alpine
-  #   environment:
-  #     - POSTGRES_DB=myproject
-  #     - POSTGRES_USER=myprojectuser
-  #     - POSTGRES_PASSWORD=password
-  #   ports:
-  #     - "5432:5432"
+  db:
+    image: postgres:13-alpine
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=dbuser
+      - POSTGRES_PASSWORD="password"
+    ports:
+      - "5432:5432"

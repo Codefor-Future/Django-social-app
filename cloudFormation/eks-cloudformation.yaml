@@ -7,15 +7,6 @@
       Default: EKS
       Description: The desired name of your AWS EKS Cluster.
     
-    EKSVersion:
-      Type: String
-      Default: 1.18
-      AllowedValues: 
-        - 1.16
-        - 1.17
-        - 1.18
-      Description: The desired version of your AWS EKS Cluster.
-    
     EKSNodeGroupName:
       Type: String
       Default: NodeGroup01
@@ -25,12 +16,12 @@
       Type: Number
       Default: 2
       Description: Number of desired Worker Node.
-      MinValue: 1
+      MinValue: 2
       MaxValue: 7
   
     EKSWorkerNodeInstanceType:
       Type: String
-      Default: t2.micro
+      Default: t3.medium
       AllowedValues: [t2.micro, t2.small, t2.medium, t2.large, t2.xlarge, t2.2xlarge,
         t3.nano, t3.micro, t3.small, t3.medium, t3.large]
       ConstraintDescription: Must be a valid EC2 instance type
@@ -69,12 +60,12 @@
   
     AvailabilityZonePublicSubnet01:
       Type: CommaDelimitedList<AWS::EC2::AvailabilityZone::Name>
-      Default: eu-west-3a
+      Default: ap-southeast-1a
       Description: Availability Zone for the Public Subnet 01. 
 
     AvailabilityZonePublicSubnet02:
       Type: CommaDelimitedList<AWS::EC2::AvailabilityZone::Name>
-      Default: eu-west-3b
+      Default: ap-southeast-1b
       Description: Availability Zone for the Public Subnet 02.
   
   Metadata:
@@ -95,21 +86,11 @@
           default: "EKS Cluster Information"
         Parameters:
           - EKSClusterName
-          - EKSVersion
           - EKSNodeGroupName
           - EKSDesiredWorkerNode
           - EKSWorkerNodeInstanceType
           - EKSIAMRoleName
           - EKSKeyPair
-  
-  Mappings:
-    ServicePrincipals:
-      aws-cn:
-        ec2: ec2.amazonaws.com.cn
-      aws-us-gov:
-        ec2: ec2.amazonaws.com
-      aws:
-        ec2: ec2.amazonaws.com
   
   Resources:
     eksVPC:
@@ -249,7 +230,7 @@
             - Effect: Allow
               Principal:
                 Service:
-                  - !FindInMap [ServicePrincipals, !Ref "AWS::Partition", ec2]
+                  - ec2.amazonaws.com
               Action:
                 - "sts:AssumeRole"
         ManagedPolicyArns:
