@@ -6,7 +6,7 @@ metadata:
     name: app
     tier: frontend
 spec:
-  replicas: 1
+  replicas: 4
   selector: 
     matchLabels:
       name: application
